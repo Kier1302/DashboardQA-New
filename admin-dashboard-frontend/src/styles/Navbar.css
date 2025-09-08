@@ -1,0 +1,98 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-white); /* light background */
+    color: var(--color-text-dark); /* dark text */
+    padding: 16px 48px 16px 32px; /* increased padding */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-sizing: border-box; /* include padding in width */
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.15);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .nav-logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-blue); /* blue accent */
+    letter-spacing: 0.02em;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  
+  .nav-links a {
+    color: var(--color-text-dark);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: var(--color-green); /* green accent on hover */
+  }
+  
+.logout-btn {
+    background-color: var(--color-green); /* green button */
+    border: none;
+    color: var(--color-white);
+    padding: 8px 20px; /* increased padding */
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.4);
+  }
+  
+  .logout-btn:hover {
+    background-color: var(--color-green-dark);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.6);
+  }
+  
+  /* Hamburger */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  
+  .nav-toggle span {
+    height: 3px;
+    width: 25px;
+    background: var(--color-text-dark);
+    margin-bottom: 5px;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-links {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: var(--color-white);
+      flex-direction: column;
+      width: 220px;
+      padding: 24px;
+      display: none;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.15);
+      border-radius: 8px;
+      transition: box-shadow 0.3s ease;
+    }
+  
+    .nav-links.open {
+      display: flex;
+    }
+  
+    .nav-toggle {
+      display: flex;
+    }
+  }
+  

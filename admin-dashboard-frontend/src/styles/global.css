@@ -1,0 +1,93 @@
+/* src/styles/global.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+/* CSS Variables for color palette */
+:root {
+    --color-white: #ffffff;
+    --color-green: #16a34a;
+    --color-green-dark: #15803d;
+    --color-blue: #2563eb;
+    --color-blue-light: #e0f2fe;
+    --color-text-dark: #1f2937;
+    --color-gray-light: #e5e7eb;
+    --color-gray-medium: #d1d5db;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    background: var(--color-blue-light); /* light bluish background */
+    color: var(--color-text-dark); /* dark gray text */
+    min-height: 100vh;
+    display: block; /* override flex to prevent vertical centering */
+}
+
+.admin-dashboard-wrapper {
+    display: flex;
+    place-items: center;
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    display: block; /* override flex to prevent vertical centering */
+}
+
+/* Optional: Apply styles to all pages */
+#root {
+    width: 100%;
+}
+
+.page-container {
+    width: 100%;
+    margin: 0; /* align to left */
+    padding: 80px 24px 24px 24px; /* space below navbar and horizontal padding */
+    box-sizing: border-box; /* include padding in width */
+}
+
+/* Global button styles */
+button {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.4);
+}
+
+button:hover {
+    background-color: var(--color-green-dark);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.6);
+}
+
+/* Global input styles */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px 12px;
+    margin: 8px 0;
+    border: 1px solid var(--color-gray-medium);
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="file"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--color-green);
+    box-shadow: 0 0 8px var(--color-green);
+    outline: none;
+}

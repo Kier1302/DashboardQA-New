@@ -1,0 +1,19 @@
+import axios from "axios";
+import Navbar from "../components/Navbar";
+
+  const DefineRequirement = () => {
+    const [requirements, setRequirements] = useState([
+      { name: "", description: "", type: "file", status: "pending" }, // Default row for requirements
+    ]);
+=======
+import { useState } from "react";
+import axios from "axios";
+import Navbar from "../components/Navbar";
+
+const DefineRequirement = () => {
+  const [requirements, setRequirements] = useState([
+    { name: "", description: "", type: "file", status: "pending" }, // Default row for requirements
+  ]);
+  const [containers, setContainers] = useState([]);
+  const [showContainerPopup, setShowContainerPopup] = useState(false);
+  const [newContainerName, setNewContainerName] = useState("");

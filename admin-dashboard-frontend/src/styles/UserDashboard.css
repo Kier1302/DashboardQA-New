@@ -1,0 +1,77 @@
+/* 🌟 User Dashboard Styles */
+.user-dashboard {
+  font-family: 'Inter', Arial, sans-serif;
+  padding: 80px 24px 24px 24px; /* added top padding to avoid navbar overlap */
+  background-color: #e0f2fe; /* light bluish background */
+  width: 100%;
+  /* Removed height to allow natural scrolling */
+}
+  
+  /* 🔹 Dashboard Grid (Single Section for User) */
+.dashboard-sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+  
+  /* 🔹 Section Box for Upload */
+.dashboard-container {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer; /* Make it clear it's clickable */
+}
+  
+.dashboard-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+}
+  
+  /* Box Header for Upload Section */
+.dashboard-container h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #2563eb;
+  text-align: center; /* Center the text in the box */
+  font-weight: 600;
+}
+  
+  /* 📤 Upload Section Form */
+.upload-section input[type="file"],
+.upload-section input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 16px;
+}
+  
+.upload-section button {
+  width: 100%;
+  background: #16a34a;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+  
+.upload-section button:hover {
+  background: #15803d;
+}
+  
+  /* 🔹 Responsive Design for Smaller Screens */
+  @media (max-width: 768px) {
+    .dashboard-sections {
+      grid-template-columns: 1fr;
+    }
+  }
+  

@@ -1,0 +1,154 @@
+/* 🌟 Admin Dashboard Styles */
+.admin-dashboard {
+  font-family: 'Inter', Arial, sans-serif;
+  padding: 32px;
+  background-color: var(--color-blue-light); /* light bluish background */
+  width: 100%;
+  height: 90vh;
+}
+
+/* 🔹 Dashboard Grid */
+.dashboard-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  margin-top: 32px;
+}
+
+/* 🔹 Section Boxes */
+.dashboard-container {
+  background: var(--color-white);
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid var(--color-gray-light);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer; /* Make it clear it's clickable */
+}
+
+.dashboard-container:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.3);
+}
+
+/* Box Headers */
+.dashboard-container h3 {
+  font-size: 22px;
+  margin-bottom: 24px;
+  color: var(--color-blue);
+  text-align: center; /* Center the text in the boxes */
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* 📤 Upload Section */
+.upload-section input[type="file"],
+.upload-section input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid var(--color-gray-medium);
+  border-radius: 8px;
+  font-size: 18px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.upload-section input[type="file"]:focus,
+.upload-section input[type="text"]:focus {
+  border-color: var(--color-green);
+  box-shadow: 0 0 8px var(--color-green);
+  outline: none;
+}
+
+.upload-section button {
+  width: 100%;
+  background: var(--color-green);
+  color: var(--color-white);
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 18px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+}
+
+.upload-section button:hover {
+  background: var(--color-green-dark);
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.6);
+}
+
+/* 📄 Files List & Approval Section */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+th, td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-gray-light);
+}
+
+th {
+  background: var(--color-blue);
+  color: var(--color-white);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+td a {
+  color: var(--color-blue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+td a:hover {
+  text-decoration: underline;
+  color: var(--color-green);
+}
+
+/* ✅ Approve & ❌ Reject Buttons */
+.approval-section button {
+  padding: 8px 18px;
+  margin: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+}
+
+.approval-section .approve-btn {
+  background: var(--color-green);
+  color: var(--color-white);
+}
+
+.approval-section .approve-btn:hover {
+  background: var(--color-green-dark);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.5);
+}
+
+.approval-section .reject-btn {
+  background: #dc2626;
+  color: var(--color-white);
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.approval-section .reject-btn:hover {
+  background: #b91c1c;
+  box-shadow: 0 4px 12px rgba(185, 28, 28, 0.5);
+}
+
+/* 🔹 Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-sections {
+    grid-template-columns: 1fr;
+  }
+}
