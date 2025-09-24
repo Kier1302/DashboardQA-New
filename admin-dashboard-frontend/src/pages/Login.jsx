@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../utils/api";
 import "../styles/Login.css";
 
 const Login = ({ setUser }) => {
@@ -16,7 +16,7 @@ const Login = ({ setUser }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const { data } = await api.post("/api/auth/login", { email, password });
 
       console.log("Login Response:", data); // Debugging log
 
@@ -25,9 +25,7 @@ const Login = ({ setUser }) => {
         localStorage.setItem("role", data.role); // Save role in localStorage (optional)
 
         // Fetch full user details after login to get email and other info
-        const userResponse = await axios.get("http://localhost:5000/api/users/me", {
-          headers: { Authorization: `Bearer ${data.token}` },
-        });
+        const userResponse = await api.get("/api/users/me");
         setUser(userResponse.data);
 
         console.log("Redirecting to: ", data.role === "admin" ? "/admin-dashboard" : "/user-dashboard");

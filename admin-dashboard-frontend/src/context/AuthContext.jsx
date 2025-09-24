@@ -1,5 +1,6 @@
 // AuthContext.jsx
 import React, { createContext, useState, useContext, useEffect } from "react";
+import api from "../utils/api";
 
 const AuthContext = createContext();
 
@@ -22,7 +23,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     if (token) {
       // Simulate getting user details from API
-      fetch("http://localhost:5000/api/users/me", {
+      fetch("https://dashboardqa-new.onrender.com/api/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
