@@ -1,5 +1,17 @@
+
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+const originalFetch = window.fetch;
+const API_BASE_URL = 'https://dashboardqa-new.onrender.com';
+
+window.fetch = function(input, init) {
+  if (typeof input === 'string' && input.startsWith('http://localhost:5000')) {
+    input = input.replace('http://localhost:5000', API_BASE_URL);
+  } else if (input instanceof Request && input.url.startsWith('http://localhost:5000')) {
+    input = new Request(input.url.replace('http://localhost:5000', API_BASE_URL), input);
+  }
+  return originalFetch(input, init);
+};
 
 import AdminDashboard from "./pages/AdminDashboard";
 import UploadFiles from "./pages/UploadFiles";
