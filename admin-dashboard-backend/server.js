@@ -14,7 +14,10 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+const corsOptions = {
+  origin: 'https://capable-sprinkles-fbf7bc.netlify.app', // Your actual frontend domain
+  credentials: true, // If you're using cookies or authorization headers
+};
 
 // Serve uploaded files statically
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
