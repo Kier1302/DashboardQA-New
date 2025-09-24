@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import Navbar from "../components/Navbar";
 
 
@@ -12,7 +12,7 @@ const DeleteFiles = () => {
 
   const fetchFiles = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/files");
+      const response = await api.get("/api/files");
       setFiles(response.data);
     } catch (error) {
       console.error("Error fetching files:", error);
@@ -23,7 +23,7 @@ const DeleteFiles = () => {
     if (!window.confirm("⚠️ Are you sure you want to delete this file?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/files/${id}`);
+      await api.delete(`/api/files/${id}`);
       fetchFiles(); // Refresh list
     } catch (error) {
       alert("❌ Failed to delete file!");
@@ -50,7 +50,7 @@ const DeleteFiles = () => {
                   <td>
                     {file.type === "file" ? (
                       <a
-                        href={`http://localhost:5000${file.url}`}
+                        href={`${api.defaults.baseURL}${file.url}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import Navbar from "../components/Navbar";
 import UploadComponent from "../components/UploadComponent";
 
@@ -10,7 +10,7 @@ const UploadFiles = () => {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/files");
+        const response = await api.get("/api/files");
         setFiles(response.data);
       } catch (error) {
         console.error("Error fetching files:", error);
@@ -19,7 +19,7 @@ const UploadFiles = () => {
 
     const fetchRequirements = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/requirements");
+        const response = await api.get("/api/requirements");
         setRequirements(response.data);
       } catch (error) {
         console.error("Error fetching requirements:", error);
@@ -34,9 +34,9 @@ const UploadFiles = () => {
     if (!window.confirm("Are you sure you want to delete this upload?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/files/${fileId}`);
+      await api.delete(`/api/files/${fileId}`);
       alert("✅ Upload deleted successfully!");
-      const response = await axios.get("http://localhost:5000/api/files");
+      const response = await api.get("/api/files");
       setFiles(response.data);
     } catch (error) {
       alert("❌ Failed to delete upload!");
@@ -48,9 +48,9 @@ const UploadFiles = () => {
     if (!window.confirm("Are you sure you want to delete this requirement?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/requirements/${requirementId}`);
+      await api.delete(`/api/requirements/${requirementId}`);
       alert("✅ Requirement deleted successfully!");
-      const response = await axios.get("http://localhost:5000/api/requirements");
+      const response = await api.get("/api/requirements");
       setRequirements(response.data);
     } catch (error) {
       alert("❌ Failed to delete requirement!");
@@ -87,7 +87,7 @@ const UploadFiles = () => {
                         {relatedFiles.some(f => f.type === "file" && f.url) ? (
                           relatedFiles.filter(f => f.type === "file" && f.url).map(f => (
                             <div key={f._id}>
-                              <a href={`http://localhost:5000${f.url}`} target="_blank" rel="noopener noreferrer">
+                              <a href={`${api.defaults.baseURL}${f.url}`} target="_blank" rel="noopener noreferrer">
                                 Download File
                               </a>
                             </div>

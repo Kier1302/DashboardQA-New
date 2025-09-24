@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import Navbar from "../components/Navbar";
 
 
@@ -12,7 +12,7 @@ const ApproveRejectFiles = () => {
 
   const fetchFiles = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/files");
+      const response = await api.get("/api/files");
       setFiles(response.data);
     } catch (error) {
       console.error("Error fetching files:", error);
@@ -21,7 +21,7 @@ const ApproveRejectFiles = () => {
 
   const handleFileStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/files/${id}`, { status });
+      await api.put(`/api/files/${id}`, { status });
       fetchFiles();
     } catch (error) {
       console.error("Error updating file status:", error);
@@ -50,7 +50,7 @@ const ApproveRejectFiles = () => {
                       <td>
                         {file.type === "file" ? (
                           <a
-                            href={`http://localhost:5000${file.url}`}
+                            href={`${api.defaults.baseURL}${file.url}`}
                             target="_blank"
                             rel="noopener noreferrer"
                           >

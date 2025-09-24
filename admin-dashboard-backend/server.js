@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 
 // Add your frontend URL here
-const FRONTEND_URL = "https://subtle-hummingbird-cfa46e.netlify.app";
+const FRONTEND_URL = "https://flourishing-queijadas-134853.netlify.app";
 
 // Configure CORS options
 const corsOptions = {

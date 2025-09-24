@@ -166,7 +166,7 @@ const UserRequirementList = () => {
                       <td>
                         {file ? (
                           requirement.type === "file" ? (
-                            <a href={`http://localhost:5000${file.url}`} target="_blank" rel="noopener noreferrer">
+                            <a href={`${api.defaults.baseURL}${file.url}`} target="_blank" rel="noopener noreferrer">
                               Download File
                             </a>
                           ) : (

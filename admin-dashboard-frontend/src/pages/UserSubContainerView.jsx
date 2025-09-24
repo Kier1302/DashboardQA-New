@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import axios from "axios";
+import api from "../utils/api";
 import { useAuth } from "../context/AuthContext";
 
 const UserSubContainerView = () => {
@@ -16,7 +16,7 @@ const UserSubContainerView = () => {
       if (!containerName || !user || !user.email) return;
       try {
         // Fetch all containers to find the parent
-        const containersResponse = await axios.get("http://localhost:5000/api/containers");
+        const containersResponse = await api.get("/api/containers");
         const parentContainer = containersResponse.data.find(c => c.name === containerName);
         if (parentContainer) {
           if (parentContainer.parent) {
@@ -25,7 +25,7 @@ const UserSubContainerView = () => {
             return;
           }
         // Show all sub-containers of the authorized parent container (authorization inheritance)
-        const subsResponse = await axios.get(`http://localhost:5000/api/containers/${parentContainer._id}/subcontainers`);
+        const subsResponse = await api.get(`/api/containers/${parentContainer._id}/subcontainers`);
         // Since authorization is inherited from parent, show all sub-containers
         setSubContainers(subsResponse.data);
         }
