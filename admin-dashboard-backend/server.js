@@ -16,12 +16,14 @@ const app = express();
 app.use(express.json());
 
 // Add your frontend URL here
-const FRONTEND_URL = "https://bejewelled-quokka-3bbd3a.netlify.app/";
+const FRONTEND_URL = "https://bejewelled-quokka-3bbd3a.netlify.app";
 
 // Configure CORS options
 const corsOptions = {
   origin: FRONTEND_URL, // Allow requests from the frontend domain
   credentials: true,    // If you are using cookies or authorization headers
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow all common HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], // Allow necessary headers
 };
 
 // Apply CORS middleware
