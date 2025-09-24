@@ -14,9 +14,6 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
 
 // Add your frontend URL here
 const FRONTEND_URL = "https://capable-sprinkles-fbf7bc.netlify.app";
