@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import MultiEmailInput from "../components/MultiEmailInput";
-import axios from "axios";
+import api from "../utils/api";
 import { useAuth } from "../context/AuthContext";
 
 const ContainerManagement = () => {
@@ -26,7 +26,7 @@ const ContainerManagement = () => {
     ) {
       try {
         // Check if email exists in user database
-        const response = await axios.get(`http://localhost:5000/api/users/exists?email=${encodeURIComponent(trimmedEmail)}`);
+        const response = await api.get(`/api/users/exists?email=${encodeURIComponent(trimmedEmail)}`);
         console.log("Email existence response:", response.data);
         if (response.data.exists) {
           setAuthEmails([...authEmails, trimmedEmail]);
@@ -79,7 +79,7 @@ const ContainerManagement = () => {
     // Validate all emails exist in user database before saving
     for (const email of authEmails) {
       try {
-        const response = await axios.get(`http://localhost:5000/api/users/exists?email=${encodeURIComponent(email)}`);
+        const response = await api.get(`/api/users/exists?email=${encodeURIComponent(email)}`);
         if (!response.data.exists) {
           alert(`Email ${email} not found in user database. Please remove it before saving.`);
           return;
@@ -92,7 +92,7 @@ const ContainerManagement = () => {
     }
     const emailsArray = Array.isArray(authEmails) ? authEmails : authEmails.split(",").map(email => email.trim()).filter(email => email.length > 0);
     try {
-      const response = await axios.post(`http://localhost:5000/api/containers/${selectedContainer._id}/authorize`, { emails: emailsArray });
+      const response = await api.post(`/api/containers/${selectedContainer._id}/authorize`, { emails: emailsArray });
       setContainers(containers.map(c => c._id === selectedContainer._id ? response.data : c));
       closeAuthPopup();
       triggerRefreshContainers();
@@ -107,7 +107,7 @@ const ContainerManagement = () => {
     const fetchContainers = async () => {
       try {
         // Call API without email query param to get all containers for admin
-        const response = await axios.get("http://localhost:5000/api/containers");
+        const response = await api.get("/api/containers");
         // Filter to only top-level containers (no parent) for main container management
         const topLevelContainers = response.data.filter(c => !c.parent);
         setContainers(topLevelContainers);
@@ -136,7 +136,7 @@ const ContainerManagement = () => {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:5000/api/containers", { name: newContainerName.trim() });
+      const response = await api.post("/api/containers", { name: newContainerName.trim() });
       setContainers([...containers, response.data]);
       setShowContainerPopup(false);
     } catch (error) {
@@ -149,7 +149,7 @@ const ContainerManagement = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this container and all its requirements?");
     if (!confirmDelete) return;
     try {
-      await axios.delete(`http://localhost:5000/api/containers/${id}`);
+      await api.delete(`/api/containers/${id}`);
       setContainers(containers.filter((container) => container._id !== id));
     } catch (error) {
       console.error("Error deleting container:", error);
