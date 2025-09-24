@@ -2,16 +2,22 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 const originalFetch = window.fetch;
-const API_BASE_URL = 'https://dashboardqa-new.onrender.com';
+const API_BASE_URL = 'https://dashboardqa-new.onrender.com'; // Set your live backend URL here
 
 window.fetch = function(input, init) {
+  console.log('Original URL:', input); // Log original URL
+  
   if (typeof input === 'string' && input.startsWith('http://localhost:5000')) {
     input = input.replace('http://localhost:5000', API_BASE_URL);
+    console.log('Replaced with:', input); // Log the modified URL
   } else if (input instanceof Request && input.url.startsWith('http://localhost:5000')) {
     input = new Request(input.url.replace('http://localhost:5000', API_BASE_URL), input);
+    console.log('Replaced Request URL:', input.url); // Log the modified Request URL
   }
+
   return originalFetch(input, init);
 };
+
 
 import AdminDashboard from "./pages/AdminDashboard";
 import UploadFiles from "./pages/UploadFiles";

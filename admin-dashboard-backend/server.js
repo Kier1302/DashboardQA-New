@@ -14,11 +14,20 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+
+// Add your frontend URL here
+const FRONTEND_URL = "https://capable-sprinkles-fbf7bc.netlify.app";
+
+// Configure CORS options
 const corsOptions = {
-  origin: 'https://capable-sprinkles-fbf7bc.netlify.app', // Your actual frontend domain
-  credentials: true, // If you're using cookies or authorization headers
+  origin: FRONTEND_URL, // Allow requests from the frontend domain
+  credentials: true,    // If you are using cookies or authorization headers
 };
 
+// Apply CORS middleware
 app.use(cors(corsOptions));
 
 
