@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../utils/api";
 import Navbar from "../components/Navbar";
 
 const UserRequirementList = () => {
@@ -15,7 +15,7 @@ const UserRequirementList = () => {
   useEffect(() => {
     const fetchRequirements = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/requirements?container=${encodeURIComponent(containerName)}`);
+        const response = await api.get(`/api/requirements?container=${encodeURIComponent(containerName)}`);
         setRequirements(response.data);
       } catch (error) {
         console.error("Error fetching requirements:", error);
@@ -24,7 +24,7 @@ const UserRequirementList = () => {
 
     const fetchFiles = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/files");
+        const response = await api.get("/api/files");
         setFiles(response.data);
       } catch (error) {
         console.error("Error fetching files:", error);
@@ -34,12 +34,12 @@ const UserRequirementList = () => {
     const fetchSubContainers = async () => {
       try {
         // Fetch all containers to find the current one
-        const containersResponse = await axios.get("http://localhost:5000/api/containers");
+        const containersResponse = await api.get("/api/containers");
         const currentContainer = containersResponse.data.find(c => c.name === containerName);
         if (currentContainer) {
           // Fetch sub-containers and filter by authorized users
           const userEmail = localStorage.getItem("userEmail")?.toLowerCase();
-          const subsResponse = await axios.get(`http://localhost:5000/api/containers/${currentContainer._id}/subcontainers`);
+          const subsResponse = await api.get(`/api/containers/${currentContainer._id}/subcontainers`);
           const authorizedSubs = subsResponse.data.filter(sub => sub.authorizedUsers.includes(userEmail));
           setSubContainers(authorizedSubs);
         }
@@ -70,7 +70,7 @@ const UserRequirementList = () => {
         formData.append("name", requirementName);
         formData.append("type", "file");
 
-        await axios.post("http://localhost:5000/api/files/upload", formData, {
+        await api.post("/api/files/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -78,7 +78,7 @@ const UserRequirementList = () => {
 
         setUploads(prev => ({ ...prev, [requirementId]: "" }));
       } else if (typeof fileOrUrl === "string" && fileOrUrl.trim() !== "") {
-        await axios.post("http://localhost:5000/api/files/upload", {
+        await api.post("/api/files/upload", {
           name: requirementName,
           type: "link",
           url: fileOrUrl,
@@ -92,7 +92,7 @@ const UserRequirementList = () => {
 
       alert("✅ File uploaded successfully");
       // Refresh files list
-      const response = await axios.get("http://localhost:5000/api/files");
+      const response = await api.get("/api/files");
       setFiles(response.data);
     } catch (error) {
       console.error("Error uploading file:", error);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import axios from "axios";
+import api from "../utils/api";
 
 const SubContainerManagement = () => {
   const { containerName } = useParams();
@@ -16,7 +16,7 @@ const SubContainerManagement = () => {
       if (!containerName) return;
       try {
         // Fetch all containers to find the parent
-        const containersResponse = await axios.get("http://localhost:5000/api/containers");
+        const containersResponse = await api.get("/api/containers");
         const parentContainer = containersResponse.data.find(c => c.name === containerName);
         if (parentContainer) {
           if (parentContainer.parent) {
@@ -25,7 +25,7 @@ const SubContainerManagement = () => {
             return;
           }
           // Show all sub-containers for admin management
-          const subsResponse = await axios.get(`http://localhost:5000/api/containers/${parentContainer._id}/subcontainers`);
+          const subsResponse = await api.get(`/api/containers/${parentContainer._id}/subcontainers`);
           setSubContainers(subsResponse.data);
         }
       } catch (error) {
@@ -45,7 +45,7 @@ const SubContainerManagement = () => {
     }
     try {
       // Check if name already exists
-      const containersResponse = await axios.get("http://localhost:5000/api/containers");
+      const containersResponse = await api.get("/api/containers");
       const existingContainer = containersResponse.data.find(c => c.name === newSubContainerName.trim());
       if (existingContainer) {
         alert("❌ Container name already exists. Please choose a different name.");
@@ -57,7 +57,7 @@ const SubContainerManagement = () => {
         alert("Parent container not found");
         return;
       }
-      const response = await axios.post("http://localhost:5000/api/containers", { name: newSubContainerName.trim(), parent: parentContainer._id });
+      const response = await api.post("/api/containers", { name: newSubContainerName.trim(), parent: parentContainer._id });
       setSubContainers([...subContainers, response.data]);
       setNewSubContainerName("");
       setShowCreatePopup(false);
@@ -73,7 +73,7 @@ const SubContainerManagement = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this sub-container and all its requirements?");
     if (!confirmDelete) return;
     try {
-      await axios.delete(`http://localhost:5000/api/containers/${id}`);
+      await api.delete(`/api/containers/${id}`);
       setSubContainers(subContainers.filter((sub) => sub._id !== id));
     } catch (error) {
       console.error("Error deleting sub-container:", error);

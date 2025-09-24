@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../utils/api";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
 
@@ -22,7 +22,7 @@ const UserDashboard = () => {
         const normalizedEmail = user.email.trim().toLowerCase();
         console.log("Fetching containers for user email:", normalizedEmail);
         // Fetch containers where user is directly authorized
-        const response = await axios.get(`http://localhost:5000/api/containers?email=${encodeURIComponent(normalizedEmail)}`);
+        const response = await api.get(`/api/containers?email=${encodeURIComponent(normalizedEmail)}`);
         const authorizedContainers = response.data;
 
         // Filter to show only main containers (those without a parent)

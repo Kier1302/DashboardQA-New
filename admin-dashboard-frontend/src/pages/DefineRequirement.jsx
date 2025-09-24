@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import Navbar from "../components/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -25,13 +25,13 @@ const DefineRequirement = () => {
       if (!containerName) return;
       try {
         // Fetch all containers to find the one by name
-        const containersResponse = await axios.get("http://localhost:5000/api/containers");
+        const containersResponse = await api.get("/api/containers");
         const foundContainer = containersResponse.data.find(c => c.name === containerName);
         if (foundContainer) {
           setContainer(foundContainer.name);
           // Fetch sub-containers and filter by authorized users
           const userEmail = localStorage.getItem("userEmail")?.toLowerCase();
-          const subsResponse = await axios.get(`http://localhost:5000/api/containers/${foundContainer._id}/subcontainers`);
+          const subsResponse = await api.get(`/api/containers/${foundContainer._id}/subcontainers`);
           const authorizedSubs = subsResponse.data.filter(sub => sub.authorizedUsers.includes(userEmail));
           setSubContainers(authorizedSubs);
         }
@@ -47,7 +47,7 @@ const DefineRequirement = () => {
     const fetchRequirements = async () => {
       if (!container) return;
       try {
-        const response = await axios.get(`http://localhost:5000/api/requirements?container=${encodeURIComponent(container)}`);
+        const response = await api.get(`/api/requirements?container=${encodeURIComponent(container)}`);
         if (response.data && response.data.length > 0) {
           setRequirements(response.data);
         }
@@ -88,7 +88,7 @@ const DefineRequirement = () => {
     setSaveDisabled(true);
     try {
       // Delete all existing requirements for the container before saving new ones
-      await axios.delete(`http://localhost:5000/api/requirements/container/${encodeURIComponent(container)}`);
+      await api.delete(`/api/requirements/container/${encodeURIComponent(container)}`);
 
       // Filter out empty requirements before saving
       const filteredRequirements = requirements.filter(
@@ -104,10 +104,10 @@ const DefineRequirement = () => {
           uniqueRequirements.push(req);
         }
       }
-      const response = await axios.post("http://localhost:5000/api/requirements", { requirements: uniqueRequirements, container });
+      const response = await api.post("/api/requirements", { requirements: uniqueRequirements, container });
       alert("✅ Requirements saved!");
       // Refresh requirements from backend to avoid duplicates
-      const fetchResponse = await axios.get(`http://localhost:5000/api/requirements?container=${encodeURIComponent(container)}`);
+      const fetchResponse = await api.get(`/api/requirements?container=${encodeURIComponent(container)}`);
       if (fetchResponse.data && fetchResponse.data.length > 0) {
         setRequirements(fetchResponse.data);
       } else {
@@ -249,7 +249,7 @@ const DefineRequirement = () => {
                         if (!confirmDelete) return;
                         try {
                           const requirementToDelete = requirements[index];
-                          await axios.delete(`http://localhost:5000/api/requirements/${requirementToDelete._id}`);
+                          await api.delete(`/api/requirements/${requirementToDelete._id}`);
                           const updated = [...requirements];
                           updated.splice(index, 1);
                           setRequirements(updated);
